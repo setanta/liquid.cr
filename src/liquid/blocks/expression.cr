@@ -64,7 +64,7 @@ module Liquid::Block
       /^#{re}$/
     end
 
-    def eval(data) : Any
+    def eval(data : Context) : Any
       ret = if @var == "true" || @var == "!false"
               true
             elsif @var == "false" || @var == "!true"
