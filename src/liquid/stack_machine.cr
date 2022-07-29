@@ -229,7 +229,7 @@ module Liquid
     end
 
     private def call_drop_method(drop : Drop, method : String) : Any
-      drop._call(method)
+      drop.call(method)
     end
 
     private def call_hash_method(hash : Hash, method : String) : Any

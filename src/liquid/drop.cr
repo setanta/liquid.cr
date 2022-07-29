@@ -5,7 +5,7 @@ module Liquid
     macro inherited
       {% verbatim do %}
       macro finished
-        def _call(method : String) : Any
+        def call(method : String) : Any
           case method
           {% for method in @type.methods %}
             {% if method.args.size == 0 && method.visibility == :public %}
@@ -22,7 +22,9 @@ module Liquid
       {% end %}
     end
 
-    def _call(method : String) : Any
+    # Called by `StackMachine` to call a method from this `Drop`.
+    # Only public methods without parameters can be called here
+    def call(method : String) : Any
       raise Exception.new("Method #{method} not found for #{self.class.name}.")
     end
   end
