@@ -11,7 +11,10 @@ module Liquid
             {% if method.args.size == 0 && method.visibility == :public %}
               when {{ method.name.stringify }}
                 ret = {{ method.name.id }}
-                ret.is_a?(Liquid::Any) ? ret : Liquid::Any.new(ret)
+                return ret if ret.is_a?(Liquid::Any)
+                return Liquid::Any.new(ret.map { |item| Liquid::Any.new(item) }) if ret.is_a?(Array)
+
+                Liquid::Any.new(ret)
             {% end %}
           {% end %}
           else
